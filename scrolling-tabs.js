@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-scrolling-tabs
- * @version v0.2.0
+ * @version v0.2.1
  * @link https://github.com/mikejacobson/angular-bootstrap-scrolling-tabs
  * @author Mike Jacobson <michaeljjacobson1@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -586,6 +586,8 @@
         }
 
         smv.slideMovableContainerToLeftPos();
+      } else {
+        stc.handleArrowsClassNames('left');
       }
     };
 
@@ -759,7 +761,7 @@
         arrows[edge].addClass(edgeClassName);
         arrows[edge == 'left' ? 'right' : 'left'].removeClass(edgeClassName);
       } else {
-        arrows['left'].remove(edgeClassName);
+        arrows['left'].removeClass(edgeClassName);
         arrows['right'].removeClass(edgeClassName);
       }
     }
