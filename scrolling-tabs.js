@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-scrolling-tabs
- * @version v0.2.1
+ * @version v0.3.0
  * @link https://github.com/mikejacobson/angular-bootstrap-scrolling-tabs
  * @author Mike Jacobson <michaeljjacobson1@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -559,9 +559,11 @@
         return;
       }
 
+      console.log(parseInt(stc.scrollingTabsActiveOffset || 0, 10));
+
       activeTabLeftPos = $activeTab.offset().left;
       activeTabWidth = $activeTab.outerWidth();
-      activeTabRightPos = activeTabLeftPos + activeTabWidth;
+      activeTabRightPos = activeTabLeftPos + activeTabWidth + parseInt(stc.scrollingTabsActiveOffset || 0, 10);
 
       rightArrowLeftPos = stc.$rightScrollArrow.offset().left;
       leftArrowRightPos = stc.$leftScrollArrow.outerWidth(); // its leftpos is 0
@@ -680,7 +682,7 @@
   /* **********************************************************************
    * ScrollingTabsControl - Class that each directive will instantiate
    * **********************************************************************/
-  function ScrollingTabsControl($tabsContainer, $timeout) {
+  function ScrollingTabsControl($tabsContainer, $timeout, opts) {
     var stc = this;
 
     stc.$tabsContainer = $tabsContainer;
@@ -693,6 +695,8 @@
     stc.scrollMovement = new ScrollMovement(stc);
     stc.eventHandlers = new EventHandlers(stc);
     stc.elementsHandler = new ElementsHandler(stc);
+
+    stc.scrollingTabsActiveOffset = opts.scrollingTabsActiveOffset || 0
   }
 
   // prototype methods
@@ -728,7 +732,7 @@
 
         if (!actionsTaken.didScrollToActiveTab) {
           scrollMovement.scrollToActiveTab({
-            isOnTabsRefresh: options.isWatchingTabs
+            isOnTabsRefresh: options.isWatchingTabs,
           });
         }
 
@@ -833,7 +837,8 @@
           // the tabs without adding a watch
           scrollingTabsControl.initTabs({
             isWrapperDirective: false,
-            scrollToTabEdge: scrollToTabEdge
+            scrollToTabEdge: scrollToTabEdge,
+            scrollingTabsActiveOffset: attrs.scrollingTabsActiveOffset
           });
 
           return;
@@ -911,7 +916,7 @@
       transclude: true,
       replace: true,
       link: function (scope, element, attrs) {
-        var scrollingTabsControl = new ScrollingTabsControl(element, $timeout),
+        var scrollingTabsControl = new ScrollingTabsControl(element, $timeout, {scrollingTabsActiveOffset: attrs.scrollingTabsActiveOffset}),
           isWrappingAngularUIBTabset = element.find('uib-tabset').length > 0,
           isWrappingAngularUITabset = isWrappingAngularUIBTabset || element.find('tabset, .scrtabs-tabs-movable-container div > ul.nav').length > 0,
           scrollToTabEdge = attrs.scrollToTabEdge && attrs.scrollToTabEdge.toLowerCase() === 'true',
