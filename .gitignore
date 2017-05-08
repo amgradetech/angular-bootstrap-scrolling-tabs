@@ -1,4 +1,6 @@
-.project
-.sass-cache
 *.rb
 .idea/
+.project/
+.sass-cache/
+dist/
+node_modules/
