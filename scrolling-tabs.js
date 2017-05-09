@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-scrolling-tabs
- * @version v0.3.0
+ * @version v0.3.1
  * @link https://github.com/mikejacobson/angular-bootstrap-scrolling-tabs
  * @author Mike Jacobson <michaeljjacobson1@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -558,8 +558,6 @@
       if (!$activeTab.length) {
         return;
       }
-
-      console.log(parseInt(stc.scrollingTabsActiveOffset || 0, 10));
 
       activeTabLeftPos = $activeTab.offset().left;
       activeTabWidth = $activeTab.outerWidth();
