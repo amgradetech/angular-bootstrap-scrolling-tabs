@@ -709,7 +709,7 @@
           scrollMovement.scrollToActiveTab({
             isOnTabsRefresh: true
           });
-        }, 100);
+        }, 200);
       }
     };
 
