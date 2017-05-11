@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-scrolling-tabs
- * @version v1.0.1
+ * @version v1.0.2
  * @link https://github.com/mikejacobson/angular-bootstrap-scrolling-tabs
  * @author Mike Jacobson <michaeljjacobson1@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -924,11 +924,11 @@
             hasTabContentOutsideMovableContainer: true
           };
 
-        angular.extend(scope, { scrtc: scrtc });
+        angular.extend(scope, { scrtc });
 
-        if (attrs.refreshOn) {
-          scope.$watch(attrs.refreshOn, function (newVal, oldVal) {
-            if (newVal && newVal !== oldVal) {
+        if (typeof attrs.refreshOn != 'undefined') {
+          attrs.$observe('refreshOn', function (attrValue) {
+            if (attrValue === 'true') {
               scrollingTabsControl.handleTriggeredRefresh();
             }
           });
