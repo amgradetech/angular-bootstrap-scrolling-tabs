@@ -3,3 +3,4 @@
 *.rb
 .idea/
 node_modules/
+*.lock
