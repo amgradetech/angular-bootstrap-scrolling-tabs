@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-scrolling-tabs
- * @version v0.3.2
+ * @version v1.0.0
  * @link https://github.com/mikejacobson/angular-bootstrap-scrolling-tabs
  * @author Mike Jacobson <michaeljjacobson1@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -914,7 +914,7 @@
       transclude: true,
       replace: true,
       link: function (scope, element, attrs) {
-        var scrollingTabsControl = new ScrollingTabsControl(element, $timeout, {scrollingTabsActiveOffset: attrs.scrollingTabsActiveOffset}),
+        var scrollingTabsControl = new ScrollingTabsControl(element, $timeout, { scrollingTabsActiveOffset: attrs.scrollingTabsActiveOffset }),
           isWrappingAngularUIBTabset = element.find('uib-tabset').length > 0,
           isWrappingAngularUITabset = isWrappingAngularUIBTabset || element.find('tabset, .scrtabs-tabs-movable-container div > ul.nav').length > 0,
           scrollToTabEdge = attrs.scrollToTabEdge && attrs.scrollToTabEdge.toLowerCase() === 'true',
