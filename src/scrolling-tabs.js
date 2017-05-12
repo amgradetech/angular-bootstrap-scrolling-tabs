@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-scrolling-tabs
- * @version v1.0.2
+ * @version v1.0.3
  * @link https://github.com/mikejacobson/angular-bootstrap-scrolling-tabs
  * @author Mike Jacobson <michaeljjacobson1@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -51,13 +51,11 @@
     // plunk: http://plnkr.co/edit/lWeQxxecKPudK7xlQxS3
     scrollingTabsWrapperTemplate = [
       '<div class="scrtabs-tab-wrapper-container" ng-class="{ \'force-height\': !scrtc.hasTabContentOutsideMovableContainer }">',
-      '  <div>',
-      '    <div class="scrtabs-tab-scroll-arrow scrtabs-js-tab-scroll-arrow-left"><span class="glyphicon glyphicon-chevron-left"></span></div>',
+      '  <div class="scrtabs-tab-scroll-arrow scrtabs-js-tab-scroll-arrow-left"><span class="glyphicon glyphicon-chevron-left"></span></div>',
       '    <div class="scrtabs-tabs-fixed-container">',
       '      <div class="scrtabs-tabs-movable-container" ng-transclude></div>',
       '    </div>',
-      '    <div class="scrtabs-tab-scroll-arrow scrtabs-js-tab-scroll-arrow-right"><span class="glyphicon glyphicon-chevron-right"></span></div>',
-      '  </div>',
+      '  <div class="scrtabs-tab-scroll-arrow scrtabs-js-tab-scroll-arrow-right"><span class="glyphicon glyphicon-chevron-right"></span></div>',
       '</div>'
     ].join('');
 
