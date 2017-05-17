@@ -1,37 +1,71 @@
-const gulp = require('gulp');
+var gulp = require('gulp');
 
-const argv = require('yargs').argv;
-const autoprefixer = require('gulp-if');
-const babel = require('gulp-babel');
-const cssnano = require('gulp-cssnano');
-const eslint = require('gulp-eslint');
-const gulpif = require('gulp-if');
-const sass = require('gulp-sass');
-const uglify = require('gulp-uglify');
+var browserSync = require('browser-sync');
+var cleancss = require('gulp-clean-css');
+var include = require('gulp-include');
+var jshint = require('gulp-jshint');
+var rename = require('gulp-rename');
+var sass = require('gulp-sass');
+var uglify = require('gulp-uglify');
+var util = require('gulp-util');
 
-console.log(argv.dev ? 'DEV' : 'Prepublish');
 
-gulp.task('lint', () => gulp
-  .src('./src/scrolling-tabs.js')
-  .pipe(eslint())
-  .pipe(eslint.formatEach())
-  .pipe(eslint.failAfterError())
-);
+gulp.task('bundlejs', function () {
+  return gulp.src('src/js/_main.js')
+    .pipe(include())
+      .on('error', console.log)
+    .pipe(rename('scrolling-tabs.js'))
+    .pipe(gulp.dest('dist'));
+});
 
-gulp.task('js'/*, ['lint']*/, () => gulp
-  .src('./src/scrolling-tabs.js')
-  .pipe(babel({
-    presets: ['es2015']
-  }))
-  .pipe(gulpif(!argv.dev, uglify()))
-  .pipe(gulp.dest('dist/'))
-);
+gulp.task('lint', function () {
+  return gulp.src('dist/scrolling-tabs.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'));
+});
 
-gulp.task('css', () => gulp
-  .src('./src/scrolling-tabs.scss')
-  .pipe(sass())
-  .pipe(cssnano())
-  .pipe(gulp.dest('dist/'))
-);
+gulp.task('lintsrc', function () {
+  return gulp.src('src/js/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'));
+});
 
-gulp.task('default', ['css', 'js']);
+gulp.task('sass', function () {
+  return gulp.src('src/scss/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('minjs', function () {
+  return gulp.src('dist/scrolling-tabs.js')
+    .pipe(rename('scrolling-tabs.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('mincss', function () {
+  return gulp.src('dist/scrolling-tabs.css')
+    .pipe(rename('scrolling-tabs.min.css'))
+    .pipe(cleancss())
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('browser-sync', function () {
+  browserSync.init({
+    startPath: 'run',
+    server: {
+      baseDir: './'
+    }
+  });
+
+  gulp.watch(['dist/*.*', 'test/*.html']).on('change', browserSync.reload);
+});
+
+gulp.task('watch', function () {
+  gulp.watch('src/scss/*.scss', ['sass']);
+  gulp.watch('src/js/*.js', ['bundlejs', 'lint', 'minjs']);
+});
+
+gulp.task('build', ['bundlejs', 'lint', 'sass', 'minjs', 'mincss']);
+
+gulp.task('default', ['bundlejs', 'lint', 'sass', 'minjs', 'mincss', 'browser-sync', 'watch']);

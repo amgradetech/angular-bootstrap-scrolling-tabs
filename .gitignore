@@ -1,6 +1,5 @@
 .project
 .sass-cache
 *.rb
+node_modules
 .idea/
-node_modules/
-*.lock
